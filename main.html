@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Issue Tracker</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap">
+
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-image: url("download.jpeg");
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .waviy {
+            position: relative;
+            -webkit-box-reflect: below -20px linear-gradient(transparent, rgba(0, 0, 0, .2));
+            font-size: 60px;
+        }
+
+        .waviy span {
+            font-family: 'Alfa Slab One', cursive;
+            position: relative;
+            display: inline-block;
+            color: #fff;
+            text-transform: uppercase;
+            animation: waviy 1s infinite;
+            animation-delay: calc(.1s * var(--i));
+        }
+
+        @keyframes waviy {
+            0%, 40%, 100% {
+                transform: translateY(0)
+            }
+
+            20% {
+                transform: translateY(-10px)
+            }
+        }
+
+        table {
+            width: 100%;
+            background-color: lightgray;
+        }
+
+        .task-list {
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: lightblue;
+        }
+
+        .task-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-item:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        .task-list .task-item:nth-of-type(odd) {
+            background-color: #f2f2f2;
+        }
+
+        .task-item span {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            background-color: lightgray;
+        }
+
+        th,
+        td {
+            text-align: center;
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: larger;
+        }
+
+        .center-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .animate-header {
+            background-image: linear-gradient(
+                -150deg,
+                #231557 0%,
+                #44107a 29%,
+                #ff1361 67%,
+                #fff800 100%
+            );
+            background-size: auto auto;
+            background-clip: border-box;
+            background-size: 200% auto;
+            color: #fff;
+            background-clip: text;
+            
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textclip 2s linear infinite;
+            display: inline-block;
+            font-size: 100px;
+        }
+
+        @keyframes textclip {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        th,
+        td {
+            text-align: center;
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: larger;
+        }
+
+        .center-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .animate-character {
+            text-transform: uppercase;
+            background-image: linear-gradient(
+                -225deg,
+                #231557 0%,
+                #44107a 29%,
+                #ff1361 67%,
+                #fff800 100%
+            );
+            background-size: auto auto;
+            background-clip: border-box;
+            background-size: 200% auto;
+            color: #fff;
+            background-clip: text;
+            
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: blue;
+            animation: textclip 2s linear infinite;
+            display: inline-block;
+            font-size: 90px;
+        }
+
+        @keyframes textclip {
+            to {
+                background-position: 200% center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <center>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3 class="animate-character waviy">
+                            <span style="--i:1">i</span>
+                            <span style="--i:2">s</span>
+                            <span style="--i:3">s</span>
+                            <span style="--i:4">u</span>
+                            <span style="--i:5">e</span>
+                            <span style="--i:6"> </span>
+                            <span style="--i:7">t</span>
+                            <span style="--i:8">r</span>
+                            <span style="--i:9">a</span>
+                            <span style="--i:10">c</span>
+                            <span style="--i:10">k</span>
+                            <span style="--i:10">e</span>
+                            <span style="--i:10">r</span>
+                        </h3>
+                    </div>
+                </div>
+            </center>
+        </header>
+        <div class="jumbotron">
+            <h3>Add New Issue:</h3>
+            <form id="issueInputForm">
+                <div class="form-group">
+                    <label for="issueDescription">Description</label>
+                    <textarea class="form-control" id="issueDescription" placeholder="Describe the issue ..."
+                        rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="issueSeverity">Priority</label>
+                    <select id="issueSeverity" class="form-control" required>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="issueAssignedTo">Assigned To</label>
+                    <select id="issueAssignedTo" class="form-control" required>
+                        <option value="Admin">Admin</option>
+                        <option value="Developer">Developer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="issueAttachment">Attachment (ZIP file)</label>
+                    <input type="file" class="form-control" id="issueAttachment" accept=".zip" required>
+                </div>
+                <div class="center-button">
+                    <button type="button" class="btn btn-primary" onclick="submitIssue()">Add</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-12">
+            <div id="issuesList" class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Issue ID</th>
+                            <th>Status</th>
+                            <th>Description</th>
+                            <th>Priority</th>
+                            <th>Handler</th>
+                            <th>File</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade task-list" id="emptyField" tabindex="-1" role="dialog" aria-labelledby="emptyFieldLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emptyFieldLabel">Invalid Input!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Please provide the description of the issue and also the person name who you want to assign the
+                    issue.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for updating an issue -->
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Update Issue</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateForm">
+                        <div class="form-group">
+                            <label for="updateDescription">New Description</label>
+                            <textarea class="form-control" id="updateDescription"
+                                placeholder="Enter the updated description ..." rows="4"></textarea>
+                        </div>
+                        <input type="hidden" id="updateId">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="updateIssue()">Update</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script>
+        function submitIssue() {
+            const getInputValue = id => document.getElementById(id).value;
+            const description = getInputValue('issueDescription');
+            const severity = getInputValue('issueSeverity');
+            const assignedTo = getInputValue('issueAssignedTo');
+            const attachment = getInputValue('issueAttachment');
+            const id = Math.floor(Math.random() * 100000000) + '';
+            const status = 'Created';
+
+            if (description.length === 0 || assignedTo.length === 0 || attachment.length === 0) {
+                alert("Please fill all fields with required data.");
+                $('#add-issue').attr("data-toggle", "modal");
+                $('#add-issue').attr("data-target", "#emptyField");
+            } else {
+                $('#add-issue').removeAttr("data-toggle", "modal");
+                $('#add-issue').removeAttr("data-target", "#emptyField");
+                const issue = { id, description, severity, assignedTo, attachment, status };
+                let issues = localStorage.getItem('issues') ? JSON.parse(localStorage.getItem('issues')) : [];
+                issues.push(issue);
+                localStorage.setItem('issues', JSON.stringify(issues));
+                clearForm();
+                fetchIssues();
+            }
+        }
+
+        function updateIssue() {
+            const updatedDescription = $('#updateDescription').val();
+            const id = $('#updateId').val();
+
+            if (updatedDescription.length === 0) {
+                alert("Please enter a new description.");
+                return;
+            }
+
+            let issues = JSON.parse(localStorage.getItem('issues'));
+            const updatedIssues = issues.map(issue => {
+                if (issue.id === id) {
+                    issue.description = updatedDescription;
+                }
+                return issue;
+            });
+
+            localStorage.setItem('issues', JSON.stringify(updatedIssues));
+            fetchIssues();
+            $('#updateModal').modal('hide');
+        }
+
+        function updateIssueModal(id) {
+            const issues = JSON.parse(localStorage.getItem('issues'));
+            const currentIssue = issues.find(issue => issue.id === id);
+
+            $('#updateDescription').val(currentIssue.description);
+            $('#updateId').val(id);
+
+            $('#updateModal').modal('show');
+        }
+
+        function closeIssue(id) {
+            let issues = JSON.parse(localStorage.getItem('issues'));
+            const currentIssue = issues.find(issue => issue.id === id);
+
+            currentIssue.status = 'Closed';
+            currentIssue.description = `<strike>${currentIssue.description}</strike>`;
+
+            localStorage.setItem('issues', JSON.stringify(issues));
+            fetchIssues();
+        }
+
+        function deleteIssue(id) {
+            let issues = JSON.parse(localStorage.getItem('issues'));
+            const remainingIssues = issues.filter(issue => issue.id !== id);
+
+            localStorage.setItem('issues', JSON.stringify(remainingIssues));
+            fetchIssues();
+        }
+
+        function fetchIssues() {
+            const issues = JSON.parse(localStorage.getItem('issues'));
+            const issuesList = $('#issuesList').find('tbody');
+            issuesList.empty();
+
+            if (issues) {
+                const priorityOrder = { High: 0, Medium: 1, Low: 2 };
+
+        const sortedIssues = issues.sort((a, b) => priorityOrder[a.severity] - priorityOrder[b.severity]);
+
+        for (const issue of sortedIssues) {
+          const { id, description, severity, assignedTo, attachment, status } = issue;
+          const fileName = attachment ? attachment.replace(/^.*[\\\/]/, '') : '';
+          const issueHtml = `<tr>
+                                <td>${id}</td>
+                                <td align="center"><span class="label label-info">${status}</span></td>
+                                <td align="center">${description}</td>
+                                <td align="center"><span class="glyphicon glyphicon-time"> ${severity}</span></td>
+                                <td align="center"><span class="glyphicon glyphicon-user"> ${assignedTo}</span></td>
+                                <td align="center"><span class="glyphicon glyphicon-paperclip"> ${fileName}</span></td>
+                                <td>
+                                  <button onclick="closeIssue('${id}')" class="btn btn-warning">Close</button>
+                                  <button onclick="deleteIssue('${id}')" class="btn btn-danger">Delete</button>
+                                  <button onclick="updateIssueModal('${id}')" class="btn btn-primary">Update</button>
+                                </td>
+                              </tr>`;
+          issuesList.append(issueHtml);
+        }
+      }
+    }
+
+    function clearForm() {
+      document.getElementById('issueInputForm').reset();
+    }
+  </script>
+</body>
+
+</html>
